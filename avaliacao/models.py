@@ -1,5 +1,6 @@
 # avaliacao/models.py
 from django.db import models
+from django.contrib.auth.models import User  # Importe o modelo User
 
 class Evaluator(models.Model):
     """
@@ -19,6 +20,8 @@ class Evaluated(models.Model):
     """
     Model to store information about evaluated individuals.
     """
+    # Adicione a relação com o User do Django
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True, related_name='evaluated')
     full_name = models.CharField(max_length=200)
     is_associate = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -30,6 +33,7 @@ class Evaluated(models.Model):
         verbose_name = 'Evaluated'
         verbose_name_plural = 'Evaluated'
 
+# O restante do seu modelo permanece o mesmo
 class Evaluation(models.Model):
     """
     Model to store skill evaluations.
