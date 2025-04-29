@@ -6,6 +6,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import Evaluator, Evaluated, Evaluation
 from .serializers import EvaluationCreateSerializer, EvaluationSerializer
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
 
 def index(request):
     """Página inicial simples para o backend"""
@@ -27,6 +29,7 @@ def get_csrf_token(request):
     return JsonResponse({'csrf_token': token})
 
 @api_view(['POST'])
+@permission_classes([AllowAny])  # Remove a exigência de autenticação momentaneamente
 def process_evaluation(request):
     """
     Endpoint to process evaluation form submissions
